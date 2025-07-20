@@ -1,0 +1,78 @@
+
+div {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 320px;
+  box-sizing: border-box;
+}
+
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #555;
+}
+
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  outline-color: #6a0dad;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #6a0dad;
+}
+
+
+button {
+  padding: 12px;
+  background-color: #6a0dad;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4b0082;
+}
+
+
+form > a {
+  margin-left: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #6a0dad;
+  align-self: center;
+  transition: color 0.3s ease;
+}
+
+form > a:hover {
+  color: #4b0082;
+}
