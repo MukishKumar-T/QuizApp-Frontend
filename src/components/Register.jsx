@@ -1,100 +1,66 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
-import './Register.css';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
 
-  const handleRegister = async (event) => {                            //ROLL NO: 23CS097
-      event.preventDefault();
+  const handleRegister = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/register", {
+      await axios.post("http://localhost:8080/api/auth/register", {
         name,
         userName,
-        email,
         password,
-        roleNames: [role],
       });
-      alert("Registration successful!");
-      setName("");
-      setUserName("");
-      setEmail("");
-      setPassword("");
-      setRole("");
-    } catch (error) {
-      console.error("Registration failed", error);
-      alert("Registration failed");
+      navigate("/login");
+    } catch (err) {
+      alert("Registration failed: " + err.response?.data || err.message);
     }
   };
 
   return (
-    <div className="container">
-      <h1 className="register-heading">Create New Account</h1>
-      <form onSubmit={handleRegister} className="register-form">
-
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
-          required
-        />
-
-        <label htmlFor="userName">Username</label>
-        <input
-          id="userName"
-          type="text"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          placeholder="Enter username"
-          required
-        />
-
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter email"
-          required
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter password"
-          required
-        />
-
-        <label>User Role</label>
-        <div>
+    <div style={{ padding: "20px" }}>
+      <h2>Register</h2>
+      <form onSubmit={handleRegister}>
+        <div style={{ marginBottom: "10px" }}>
           <input
-            type="radio"
-            name="role"
-            value="ROLE_ADMIN"
-            checked={role === "ROLE_ADMIN"}
-            onChange={(e) => setRole(e.target.value)}
-          /> Admin
-          <input
-            type="radio"
-            name="role"
-            value="ROLE_USER"
-            checked={role === "ROLE_USER"}
-            onChange={(e) => setRole(e.target.value)}
-          /> User
+            type="text"
+            placeholder="Name"
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
-
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            required
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <button type="submit">Register</button>
+        <div>
+            <p>
+                Already have an account? <Link to="/Login">Login</Link>
+            </p>
+        </div>
       </form>
     </div>
   );

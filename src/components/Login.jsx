@@ -1,72 +1,68 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleLogin(event) {
-    event.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/login", {
+      const res = await axios.post("http://localhost:8080/api/auth/login", {
         userName,
         password,
       });
-      console.log("Login Response:", response.data);
 
-          //Extracting the token from response
-          const token = response.data.token;
+      const token = res.data.token;
+      localStorage.setItem("token", token); // Save token
 
-          if (!token) {
-            alert("Login failed: No token received");
-            return;
-          }
+      const decoded = jwtDecode(token);
+      console.log("Decode: " + decoded)
+      const role = decoded.role; // <-- this is a string like "ROLE_ADMIN" or "ROLE_USER"
+      console.log("Logged in role:", role);
 
-          //Save the token in local storage
-          localStorage.setItem("token", token);
-          alert("Login Successful");
-        } catch (e) {
-          console.error("Login Error", e.response?.data || e.message);
-          alert("Invalid Credentials");
-        }
-//       console.log("Token:", response.data);
-//       localStorage.setItem("token", response.data.token);
-//       alert("Login Successful");
-//     } catch (e) {
-//       console.error("Login Error", e);
-//       alert("Invalid Credentials");
-//     }
-//     console.log("Form Submitted");
-  }
+      // Redirect based on role
+      if (role === "ROLE_ADMIN") {
+        navigate("/admin"); // Admin Dashboard
+      } else {
+        navigate("/quiz"); // User Quiz Page
+      }
+    } catch (err) {
+      alert("Login failed: " + (err.response?.data?.message || err.message));
+    }
+  };
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <label htmlFor="userName">User Name</label>
-        <input
-          id="userName"
-          name="userName"
-          value={userName}
-          type="text"
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <br /> <br />
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <br />
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            required
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <button type="submit">Login</button>
-        <Link to="/register" style={{ marginLeft: "10px" }}>
-          Register
-        </Link>
+        <div>
+          <p>
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+        </div>
       </form>
     </div>
   );
