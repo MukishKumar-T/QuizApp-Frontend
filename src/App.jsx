@@ -7,13 +7,15 @@ import Quiz from "./components/Quiz";
 import QuizDetail from "./components/QuizDetail";
 import Leaderboard from "./components/Leaderboard";
 import AdminDashboard from "./components/AdminDashboard";
+import UserDashboard from "./components/UserDashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './components/QuizApp.css';
 
 function App() {
   return (
     <Router>
       <Header /> {/* This renders on all pages */}
-      <div className="container mt-4">
+      <div className="container mt-4 dark-theme-bg" style={{ minHeight: '90vh' }}>
         <Routes>
 
           <Route path="/" element={<Login />} />
@@ -24,6 +26,7 @@ function App() {
           <Route path="/quiz/:id" element={<QuizDetail />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
         </Routes>
       </div>
     </Router>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
   const [quizzes, setQuizzes] = useState([]);
+  const [search, setSearch] = useState(""); // Add search state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,22 +33,38 @@ const Quiz = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>All Quizzes</h2>
-
-      {quizzes.length === 0 ? (
-        <p>No quizzes found.</p>
-      ) : (
-        quizzes.map((quiz, index) => (
-          <div key={quiz.id} style={{ marginBottom: "20px" }}>
-            <h3>
-              {index + 1}. {quiz.title}
-            </h3>
-            <p>{quiz.description}</p>
-            <button onClick={() => handleStartQuiz(quiz.id)}>Start Quiz</button>
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">All Quizzes</h2>
+      <input
+        type="text"
+        placeholder="Search quizzes..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        className="form-control mb-4"
+      />
+      <div className="quiz-grid">
+        {quizzes.filter(quiz =>
+          quiz.title.toLowerCase().includes(search.toLowerCase()) ||
+          (quiz.description && quiz.description.toLowerCase().includes(search.toLowerCase()))
+        ).length === 0 ? (
+          <div className="col-12">
+            <p className="text-center">No quizzes found.</p>
           </div>
-        ))
-      )}
+        ) : (
+          quizzes
+            .filter(quiz =>
+              quiz.title.toLowerCase().includes(search.toLowerCase()) ||
+              (quiz.description && quiz.description.toLowerCase().includes(search.toLowerCase()))
+            )
+            .map((quiz) => (
+              <div key={quiz.id} className="quiz-card">
+                <h3 className="quiz-card-title">{quiz.title}</h3>
+                <p className="quiz-card-desc">{quiz.description}</p>
+                <button onClick={() => handleStartQuiz(quiz.id)} className="btn btn-primary quiz-card-btn">Start Quiz</button>
+              </div>
+            ))
+        )}
+      </div>
     </div>
   );
 };

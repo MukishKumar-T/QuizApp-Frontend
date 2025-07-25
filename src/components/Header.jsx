@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Header.css";
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">Quiz App</Link>
         <button
@@ -37,7 +37,10 @@ const Header = () => {
                   <Link className="nav-link" to="/quiz">Quiz</Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+                  <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
                 </li>
               </>
             ) : (

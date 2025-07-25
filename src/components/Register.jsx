@@ -25,40 +25,43 @@ const Register = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="auth-container">
       <h2>Register</h2>
       <form onSubmit={handleRegister}>
-        <div style={{ marginBottom: "10px" }}>
+        <div className="mb-3">
           <input
             type="text"
+            className="form-control"
             placeholder="Name"
             value={name}
             required
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div className="mb-3">
           <input
             type="text"
+            className="form-control"
             placeholder="Username"
             value={userName}
             required
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div className="mb-3">
           <input
             type="password"
+            className="form-control"
             placeholder="Password"
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
-        <div>
+        <button type="submit" className="btn btn-primary w-100">Register</button>
+        <div className="text-center mt-3">
             <p>
-                Already have an account? <Link to="/Login">Login</Link>
+                Already have an account? <Link to="/login">Login</Link>
             </p>
         </div>
       </form>

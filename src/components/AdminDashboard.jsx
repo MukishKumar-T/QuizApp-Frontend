@@ -138,132 +138,143 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Admin Dashboard</h1>
+    <div className="container-fluid mt-4">
+      <h1 className="mb-4">Admin Dashboard</h1>
 
-      {/* Create Quiz */}
-      <div>
-        <h2>Create Quiz</h2>
-        <input
-          type="text"
-          placeholder="Title"
-          value={newQuiz.title}
-          onChange={(e) => setNewQuiz({ ...newQuiz, title: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Category"
-          value={newQuiz.category}
-          onChange={(e) => setNewQuiz({ ...newQuiz, category: e.target.value })}
-        />
-        <button onClick={createQuiz}>Add Quiz</button>
-      </div>
-
-      {/* Quiz List */}
-      <div>
-        <h2>All Quizzes</h2>
-        {quizzes.map((quiz) => (
-          <div key={quiz.id} style={{ marginTop: "10px" }}>
-            <strong>{quiz.title}</strong> ({quiz.category})
-            <button
-              onClick={() => {
-                  const quizId = quiz.id;
-                setSelectedQuizId(quizId);
-                setSelectedQuestionId(null);
-                fetchQuestions(quizId);
-              }}
-              style={{ marginLeft: "10px" }}
-            >
-              View Questions
-            </button>
+      {/* Create Quiz Card */}
+      <div className="card mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">Create New Quiz</h4>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-5">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Quiz Title"
+                value={newQuiz.title}
+                onChange={(e) => setNewQuiz({ ...newQuiz, title: e.target.value })}
+              />
+            </div>
+            <div className="col-md-5">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Quiz Category"
+                value={newQuiz.category}
+                onChange={(e) => setNewQuiz({ ...newQuiz, category: e.target.value })}
+              />
+            </div>
+            <div className="col-md-2">
+              <button onClick={createQuiz} className="btn btn-primary w-100">Add Quiz</button>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
 
-      {/* Questions */}
-      {selectedQuizId && (
-        <div>
-          <h2>Questions</h2>
-          <input
-            type="text"
-            placeholder="Question text"
-            value={newQuestion.questionText}
-            onChange={(e) =>
-              setNewQuestion({ ...newQuestion, questionText: e.target.value })
-            }
-          />
-          <button onClick={addQuestion}>Add Question</button>
-
-          {questions.map((q) => (
-            <div
-              key={q.id}
-              style={{
-                marginTop: "10px",
-                padding: "10px",
-                border: "1px solid #ccc",
-              }}
-            >
-              <p>
-                <strong>Q:</strong> {q.questionText}
-              </p>
-              <button
-                onClick={() => {
-                  setSelectedQuestionId(q.id);
-                  fetchAnswers(q.id);
-                }}
-              >
-                View/Add Answers
-              </button>
-              <button onClick={() => updateQuestion(q)} style={{ marginLeft: "10px" }}>
-                Edit
-              </button>
-              <button onClick={() => deleteQuestion(q.id)} style={{ marginLeft: "5px" }}>
-                Delete
-              </button>
+      <div className="row">
+        {/* Quiz List Column */}
+        <div className="col-md-5">
+          <div className="card">
+            <div className="card-header">
+              <h4 className="mb-0">Manage Quizzes</h4>
             </div>
-          ))}
-        </div>
-      )}
-
-      {/* Answers */}
-      {selectedQuestionId && (
-        <div>
-          <h2>Answers</h2>
-          <input
-            type="text"
-            placeholder="Answer text"
-            value={newAnswer.answerText}
-            onChange={(e) =>
-              setNewAnswer({ ...newAnswer, answerText: e.target.value })
-            }
-          />
-          <label style={{ marginLeft: "10px" }}>
-            <input
-              type="checkbox"
-              checked={newAnswer.correct}
-              onChange={(e) =>
-                setNewAnswer({ ...newAnswer, correct: e.target.checked })
-              }
-            />
-            Correct
-          </label>
-          <button onClick={addAnswer} style={{ marginLeft: "10px" }}>
-            Add Answer
-          </button>
-
-          {answers.map((a) => (
-            <div key={a.id} style={{ marginTop: "5px" }}>
-              {a.answerText} - <strong>{a.correct ? "Correct" : "Wrong"}</strong>
-              <button onClick={() => updateAnswer(a)} style={{ marginLeft: "10px" }}>
-                Edit
-              </button>
-              <button onClick={() => deleteAnswer(a.id)} style={{ marginLeft: "5px" }}>
-                Delete
-              </button>
+            <div className="list-group list-group-flush">
+              {quizzes.map((quiz) => (
+                <button
+                  key={quiz.id}
+                  type="button"
+                  className={`list-group-item list-group-item-action ${selectedQuizId === quiz.id ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedQuizId(quiz.id);
+                    setSelectedQuestionId(null); // Reset question selection
+                    setAnswers([]); // Clear old answers
+                    fetchQuestions(quiz.id);
+                  }}
+                >
+                  {quiz.title} <span className="text-muted">({quiz.category})</span>
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      )}
+
+        {/* Questions and Answers Column */}
+        <div className="col-md-7">
+          {selectedQuizId && (
+            <div className="card mb-4">
+              <div className="card-header">
+                <h4 className="mb-0">Questions</h4>
+              </div>
+              <div className="card-body">
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="New question text"
+                    value={newQuestion.questionText}
+                    onChange={(e) => setNewQuestion({ ...newQuestion, questionText: e.target.value })}
+                  />
+                  <button onClick={addQuestion} className="btn btn-primary">Add Question</button>
+                </div>
+                <ul className="list-group">
+                  {questions.map((q) => (
+                    <li key={q.id} className="list-group-item d-flex justify-content-between align-items-center">
+                      {q.questionText}
+                      <div className="btn-group">
+                        <button onClick={() => { setSelectedQuestionId(q.id); fetchAnswers(q.id); }} className={`btn btn-sm ${selectedQuestionId === q.id ? 'btn-primary' : 'btn-outline-primary'}`}>Answers</button>
+                        <button onClick={() => updateQuestion(q)} className="btn btn-sm btn-outline-secondary">Edit</button>
+                        <button onClick={() => deleteQuestion(q.id)} className="btn btn-sm btn-outline-danger">Delete</button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {selectedQuestionId && (
+            <div className="card">
+              <div className="card-header">
+                <h4 className="mb-0">Answers</h4>
+              </div>
+              <div className="card-body">
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="New answer text"
+                    value={newAnswer.answerText}
+                    onChange={(e) => setNewAnswer({ ...newAnswer, answerText: e.target.value })}
+                  />
+                  <div className="input-group-text">
+                    <input
+                      type="checkbox"
+                      className="form-check-input mt-0"
+                      checked={newAnswer.correct}
+                      onChange={(e) => setNewAnswer({ ...newAnswer, correct: e.target.checked })}
+                    />
+                    <label className="ms-2">Correct</label>
+                  </div>
+                  <button onClick={addAnswer} className="btn btn-primary">Add Answer</button>
+                </div>
+                <ul className="list-group">
+                  {answers.map((ans) => (
+                    <li key={ans.id} className={`list-group-item d-flex justify-content-between align-items-center ${ans.correct ? 'list-group-item-success' : ''}`}>
+                      {ans.answerText}
+                      <div className="btn-group">
+                        <button onClick={() => updateAnswer(ans)} className="btn btn-sm btn-outline-secondary">Edit</button>
+                        <button onClick={() => deleteAnswer(ans.id)} className="btn btn-sm btn-outline-danger">Delete</button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
