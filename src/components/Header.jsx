@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 
 const Header = () => {
@@ -12,7 +13,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav className="navbar navbar-expand-lg m-2">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">Quiz App</Link>
         <button
@@ -27,7 +28,7 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto p-2">
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>

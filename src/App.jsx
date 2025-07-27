@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import QuizSelection from "./components/QuizSelection";
 import Quiz from "./components/Quiz";
 import QuizDetail from "./components/QuizDetail";
+import LandingPage from "./components/LandingPage";
 import Leaderboard from "./components/Leaderboard";
 import AdminDashboard from "./components/AdminDashboard";
 import UserDashboard from "./components/UserDashboard";
@@ -15,10 +16,10 @@ function App() {
   return (
     <Router>
       <Header /> {/* This renders on all pages */}
-      <div className="container mt-4 dark-theme-bg" style={{ minHeight: '90vh' }}>
+      <div className="container mt-0" style={{ minHeight: '85vh' }}>
         <Routes>
 
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/select" element={<QuizSelection />} />

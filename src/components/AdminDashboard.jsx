@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const AdminDashboard = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -137,6 +138,16 @@ const AdminDashboard = () => {
     }
   };
 
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
+  const role = decoded.role;
+
+  console.log(role);
+
+  if (role !== "ROLE_ADMIN") {
+    return <h1 style={{color: "red", textAlign: "center"}}>You are not an admin</h1>;
+  }
+
   return (
     <div className="container-fluid mt-4">
       <h1 className="mb-4">Admin Dashboard</h1>
@@ -144,11 +155,11 @@ const AdminDashboard = () => {
       {/* Create Quiz Card */}
       <div className="card mb-4">
         <div className="card-header">
-          <h4 className="mb-0">Create New Quiz</h4>
+          <h4 className="mb-0" style={{color: "white"}}>Create New Quiz</h4>
         </div>
         <div className="card-body">
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-5" style={{color: "white"}}>
               <input
                 type="text"
                 className="form-control"
@@ -157,7 +168,7 @@ const AdminDashboard = () => {
                 onChange={(e) => setNewQuiz({ ...newQuiz, title: e.target.value })}
               />
             </div>
-            <div className="col-md-5">
+            <div className="col-md-5" style={{color: "white"}}>
               <input
                 type="text"
                 className="form-control"
@@ -166,7 +177,7 @@ const AdminDashboard = () => {
                 onChange={(e) => setNewQuiz({ ...newQuiz, category: e.target.value })}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-2" style={{color: "white"}}>
               <button onClick={createQuiz} className="btn btn-primary w-100">Add Quiz</button>
             </div>
           </div>
@@ -175,10 +186,10 @@ const AdminDashboard = () => {
 
       <div className="row">
         {/* Quiz List Column */}
-        <div className="col-md-5">
+        <div className="col-md-5" style={{color: "white"}}>
           <div className="card">
             <div className="card-header">
-              <h4 className="mb-0">Manage Quizzes</h4>
+              <h4 className="mb-0" style={{color: "white"}}>Manage Quizzes</h4>
             </div>
             <div className="list-group list-group-flush">
               {quizzes.map((quiz) => (
@@ -205,7 +216,7 @@ const AdminDashboard = () => {
           {selectedQuizId && (
             <div className="card mb-4">
               <div className="card-header">
-                <h4 className="mb-0">Questions</h4>
+                <h4 className="mb-0" style={{color: "white"}}>Questions</h4>
               </div>
               <div className="card-body">
                 <div className="input-group mb-3">
