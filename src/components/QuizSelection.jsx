@@ -9,28 +9,32 @@ const QuizSelection = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card">
-        <div className="card-body">
-          <h2 className="text-center mb-4">Select a Quiz</h2>
-          <div className="mb-3">
-            <label className="form-label">Category:</label>
-            <select className="form-select">
-              <option>General</option>
-              <option>Science</option>
-              <option>History</option>
-            </select>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Quiz:</label>
-            <select className="form-select">
-              <option>General Knowledge Quiz</option>
-              <option>Basic Science Quiz</option>
-              <option>World History Quiz</option>
-            </select>
-          </div>
-          <button onClick={handleStart} className="btn btn-primary w-100 mt-3">Start Quiz</button>
+    <div className="container py-4">
+      <div className="app-card p-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <h2 className="text-center mb-4 text-primary">Select a Quiz</h2>
+        <div className="mb-4">
+          <label className="form-label fw-medium text-muted mb-2">Category:</label>
+          <select className="form-select app-form-control p-3">
+            <option>General</option>
+            <option>Science</option>
+            <option>History</option>
+          </select>
         </div>
+        <div className="mb-4">
+          <label className="form-label fw-medium text-muted mb-2">Quiz:</label>
+          <select className="form-select app-form-control p-3">
+            <option>General Knowledge Quiz</option>
+            <option>Basic Science Quiz</option>
+            <option>World History Quiz</option>
+          </select>
+        </div>
+        <button 
+          onClick={handleStart} 
+          className="app-btn-primary w-100 py-3 mt-2"
+          style={{ fontSize: '1.1rem' }}
+        >
+          Start Quiz
+        </button>
       </div>
     </div>
   );
