@@ -82,7 +82,7 @@ const AdminDashboard = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const axiosAuth = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://quiz-backend-3ws6.onrender.com",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -550,7 +550,7 @@ const AdminDashboard = () => {
       };
 
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:8080/api/quizzes/submit", submissionData, {
+      await axios.post("https://quiz-backend-3ws6.onrender.com/api/quizzes/submit", submissionData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

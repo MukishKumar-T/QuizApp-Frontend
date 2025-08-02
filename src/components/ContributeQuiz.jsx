@@ -110,7 +110,7 @@ const ContributeQuiz = () => {
 
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:8080/api/quizzes/submit",
+        "https://quiz-backend-3ws6.onrender.com/api/quizzes/submit",
         submissionData,
         {
           headers: {

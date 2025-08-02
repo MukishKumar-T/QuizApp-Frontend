@@ -39,7 +39,7 @@ const QuizDetail = () => {
     setLoading(true);
     
     axios
-      .get(`http://localhost:8080/api/quizzes/quizId/${id}`, {
+      .get(`https://quiz-backend-3ws6.onrender.com/api/quizzes/quizId/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -135,7 +135,7 @@ const QuizDetail = () => {
 
     axios
       .post(
-        `http://localhost:8080/quizAttempt/updateScore/${userName}/${id}/${calculatedScore}`,
+        `https://quiz-backend-3ws6.onrender.com/quizAttempt/updateScore/${userName}/${id}/${calculatedScore}`,
         {},
         {
           headers: {

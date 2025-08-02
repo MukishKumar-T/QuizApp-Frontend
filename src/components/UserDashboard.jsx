@@ -19,7 +19,7 @@ const UserDashboard = () => {
 
     // Fetch user data
     axios
-      .get(`http://localhost:8080/api/users/${userName}`, {
+      .get(`https://quiz-backend-3ws6.onrender.com/api/users/${userName}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -27,7 +27,7 @@ const UserDashboard = () => {
         // Fetch contributed quizzes after getting user data
         if (res.data && res.data.userId) {
           axios
-            .get(`http://localhost:8080/api/quizzes/contributor/${res.data.userId}`, {
+            .get(`https://quiz-backend-3ws6.onrender.com/api/quizzes/contributor/${res.data.userId}`, {
               headers: { Authorization: `Bearer ${token}` },
             })
             .then((quizRes) => {
@@ -41,7 +41,7 @@ const UserDashboard = () => {
 
     // Fetch quiz attempts
     axios
-      .get(`http://localhost:8080/quizAttempt/user/${userName}`, {
+      .get(`https://quiz-backend-3ws6.onrender.com/quizAttempt/user/${userName}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

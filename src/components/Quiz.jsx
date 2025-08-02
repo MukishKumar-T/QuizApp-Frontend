@@ -15,7 +15,7 @@ const Quiz = () => {
     
     // Fetch quizzes
     axios
-      .get("http://localhost:8080/api/quizzes", {
+      .get("https://quiz-backend-3ws6.onrender.com/api/quizzes", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

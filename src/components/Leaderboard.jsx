@@ -21,7 +21,7 @@ const Leaderboard = () => {
     const fetchLeaderboard = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8080/leaderboard", {
+        const response = await axios.get("https://quiz-backend-3ws6.onrender.com/leaderboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLeaderboard(response.data);

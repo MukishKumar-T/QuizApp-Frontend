@@ -14,7 +14,7 @@ const EmployeeList = () => {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:8080/employee", {
+      .get("https://quiz-backend-3ws6.onrender.com/employee", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +58,7 @@ const EmployeeList = () => {
     // Then send the API request
     axios
       .put(
-        `http://localhost:8080/employee/${empId}`,
+        `https://quiz-backend-3ws6.onrender.com/employee/${empId}`,
         {
           name: editFormData.name,
           job: editFormData.job,

@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
+      const res = await axios.post("https://quiz-backend-3ws6.onrender.com/api/auth/login", {
         userName,
         password,
       });

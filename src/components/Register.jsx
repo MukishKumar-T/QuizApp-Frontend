@@ -29,7 +29,7 @@ const Register = () => {
     setError("");
     
     try {
-      await axios.post("http://localhost:8080/api/auth/register", {
+      await axios.post("https://quiz-backend-3ws6.onrender.com/api/auth/register", {
         name,
         userName,
         password,
